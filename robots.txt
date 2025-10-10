@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://xmkos.github.io/biography.github.io/sitemap.xml
