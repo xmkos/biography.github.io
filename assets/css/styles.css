@@ -4,8 +4,8 @@
   --text: #0b1722;
   --muted: #5a6b7b;
   --primary: #1e838c;
-  --surface: rgba(255, 255, 255, 0.75);
-  --surface-strong: rgba(255, 255, 255, 0.95);
+  --surface: #ffffff;
+  --surface-strong: #ffffff;
   --shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
@@ -30,6 +30,17 @@ body.theme-dark {
   --surface: rgba(16, 30, 38, 0.6);
   --surface-strong: rgba(16, 30, 38, 0.85);
   --shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+}
+
+/* Explicit light theme to override prefers-color-scheme:dark when toggled */
+body.theme-light {
+  --bg: #f5f7f9;
+  --text: #0b1722;
+  --muted: #5a6b7b;
+  --primary: #1e838c;
+  --surface: #ffffff;
+  --surface-strong: #ffffff;
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 /* Global reset */
@@ -62,14 +73,7 @@ img { max-width: 100%; height: auto; }
 }
 
 /* Header */
-header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  backdrop-filter: blur(10px);
-  background: var(--surface);
-  border-bottom: 1px solid rgba(0,0,0,0.06);
-}
+header { background: transparent; }
 
 .nav {
   display: flex;
@@ -85,13 +89,7 @@ header {
   letter-spacing: .2px;
 }
 
-.brand-badge {
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, var(--primary), #62c3cc);
-  box-shadow: var(--shadow);
-}
+.brand-badge { display: none; }
 
 nav a {
   color: var(--text);
@@ -135,18 +133,19 @@ nav a[aria-current="page"] { background: var(--surface-strong); opacity: 1; }
   .hero { grid-template-columns: 1.1fr 1fr; }
 }
 
-.card {
-  background: var(--surface);
-  backdrop-filter: blur(10px);
-  border-radius: 16px;
-  box-shadow: var(--shadow);
-  padding: 20px;
-}
+.card { background: var(--surface); border-radius: 12px; box-shadow: var(--shadow); padding: 18px; }
 
 .hero-img {
   border-radius: 14px;
   overflow: hidden;
   box-shadow: var(--shadow);
+}
+
+.hero-img img { display: block; width: 100%; height: auto; animation: float 12s ease-in-out infinite alternate; }
+
+@keyframes float {
+  from { transform: translateY(0); }
+  to { transform: translateY(-6px); }
 }
 
 .title {

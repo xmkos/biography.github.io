@@ -5,6 +5,7 @@
 
   function applyTheme(theme) {
     document.body.classList.toggle('theme-dark', theme === 'dark');
+    document.body.classList.toggle('theme-light', theme === 'light');
     const btn = document.querySelector('#theme-toggle');
     if (btn) btn.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
   }

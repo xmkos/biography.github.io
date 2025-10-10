@@ -20,21 +20,15 @@
         <body id="top">
         <div class="site-wrap">
             <a class="visually-hidden" href="#main">Skip to content</a>
-            <header>
-                <div class="container nav">
-                    <div class="brand" aria-label="Site brand">
-                        <span class="brand-badge" aria-hidden="true"></span>
-                        <span>Kostiantyn Kovalchuk</span>
-                    </div>
-                                <nav aria-label="Primary">
-                                    <a href="./" aria-current="page">Home</a>
-                                    <a href="mypc/">My PC</a>
-                        <a href="https://github.com/xmkos" target="_blank" rel="noopener">GitHub</a>
-                    </nav>
-                    <div class="spacer"></div>
-                    <a id="theme-toggle" class="btn" href="#" role="button" aria-pressed="false" aria-label="Toggle theme">Toggle theme</a>
-                </div>
-            </header>
+                    <header class="container nav" style="justify-content: space-between;">
+                        <div class="brand" aria-label="Site brand">Kostiantyn Kovalchuk</div>
+                        <nav aria-label="Primary">
+                            <a href="./" aria-current="page">Home</a>
+                            <a href="mypc/">My PC</a>
+                            <a href="https://github.com/xmkos" target="_blank" rel="noopener">GitHub</a>
+                        </nav>
+                        <a id="theme-toggle" class="btn" href="#" role="button" aria-pressed="false" aria-live="polite" aria-label="Toggle theme">Toggle theme</a>
+                    </header>
 
             <main id="main" class="container">
                 <section class="hero">
@@ -66,9 +60,7 @@
             </footer>
         </div>
 
-        <script>
-            document.getElementById('year').textContent = new Date().getFullYear();
-        </script>
+            <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
             <script src="assets/js/main.js" defer></script>
     </body>
 </html>
