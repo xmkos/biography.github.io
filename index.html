@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kostiantyn Kovalchuk - Bio</title>
     <style>
         body {
             background-color: #1e838c;
@@ -12,47 +15,58 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            padding: 20px;
+        }
+        .image-box img {
+            background: #1e838c;
+            backdrop-filter: blur(10px);
+            padding: 5px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            max-height: 240px;
+            object-fit: cover;
         }
         .bio-box {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             padding: 20px;
             border-radius: 10px;
-            width: 50%;
+            width: 100%;
+            max-width: 600px;
             text-align: center;
             box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
-	    width: 600px;
-            height: 300px;
+            margin-top: 20px;
         }
         h1 {
             font-size: 2.5em;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 20px;
         }
         p {
-            margin-top: 2.5em;
-            font-size: 1.5em;
+            font-size: 1.2em;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            line-height: 1.5;
         }
-        .image-box img {
-background: #1e838c;
-            backdrop-filter: blur(10px);
-            padding: 5px;
-            border-radius: 10px;
-	box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
-            width: 600px;
-            height: 240px;
-        }
-	 a.button {
+        a.button {
+            display: inline-block;
             font-family: 'Roobert', sans-serif;
             font-size: 1em;
-            padding: 10px;
+            padding: 10px 20px;
             margin-top: 20px;
-            border-radius: 50%;
+            border-radius: 25px;
             background-color: rgba(255,255,255,0.1);
             backdrop-filter: blur(10px);
-            border:none;
-            color:white;
+            border: none;
+            color: white;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        a.button:hover {
+            background-color: rgba(255,255,255,0.2);
         }
     </style>
 </head>
@@ -60,13 +74,15 @@ background: #1e838c;
     <div class="image-box">
         <img src="banner.png" alt="Biography Image">
     </div>
-<body>
     <div class="bio-box">
-        <h1>Keiji</h1>
+        <h1>Kostiantyn Kovalchuk</h1>
         <p>
-Second-year Computer Science student at DSW Wrocław, specializing in Game Development. I build immersive gameplay systems, smart enemy AI, and interactive mechanics. My goal is to combine technical skills with creative problem-solving to craft engaging player experiences.
-</p>
-<a href="https://www.twitch.tv/keijidead" class="button">TWITCH</a>
+            Second-year Computer Science student at DSW Wrocław, specializing in Game Development.
+            I build immersive gameplay systems, smart enemy AI, and interactive mechanics.
+            My goal is to combine technical skills with creative problem-solving to craft engaging player experiences.
+        </p>
+        <a href="https://github.com/xmkos" class="button">View on GitHub</a>
+		<a href="https://xmkos.github.io/biography.github.io/mypc" class="button">View pc specs</a>
     </div>
 </body>
 </html>
