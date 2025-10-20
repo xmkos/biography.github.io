@@ -3,118 +3,339 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kostiantyn Kovalchuk - Junior Game Developer | Unity Developer Portfolio</title>
-    <meta name="description" content="Kostiantyn Kovalchuk - Junior Game Developer specializing in Unity, C#, and gameplay programming. Computer Science student with experience in AI systems and interactive game mechanics.">
+    <title>Kostiantyn Kovalchuk · Unity Developer Portfolio</title>
+    <meta name="description" content="Portfolio of Kostiantyn Kovalchuk – Unity gameplay programmer and computer science student focused on responsive mechanics and AI systems.">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div class="loader" id="loader">
-        <div class="loader-content">
-            <div class="loader-spinner"></div>
-            <p>Loading Portfolio...</p>
+    <div class="portfolioLoader" id="portfolioLoader">
+        <div class="loaderBox">
+            <div class="loaderSpinner"></div>
+            <p>Loading portfolio</p>
         </div>
     </div>
 
-    <!-- Navigation -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <span class="logo-text">Kostiantyn</span>
+    <nav class="siteNav" id="siteNav">
+        <div class="navLane">
+            <div class="navSignature">
+                <span class="navMark">Kostiantyn</span>
             </div>
-            <div class="nav-menu" id="nav-menu">
-                <a href="#hero" class="nav-link active">Home</a>
-                <a href="#about" class="nav-link">About</a>
-                <a href="#skills" class="nav-link">Skills</a>
-                <a href="#projects" class="nav-link">Projects</a>
-                <a href="#education" class="nav-link">Education</a>
-                <a href="#contact" class="nav-link">Contact</a>
+            <div class="menuLinks" id="menuLinks">
+                <a href="#landingKostiantyn" class="menuAnchor active">Intro</a>
+                <a href="#profileStory" class="menuAnchor">Background</a>
+                <a href="#craftCatalogue" class="menuAnchor">Skills</a>
+                <a href="#buildLog" class="menuAnchor">Projects</a>
+                <a href="#learningTimeline" class="menuAnchor">Education</a>
+                <a href="#contactBridge" class="menuAnchor">Contact</a>
             </div>
-            <div class="nav-actions">
-                <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
-                    <span class="hamburger"></span>
+            <div class="menuControls">
+                <button class="menuToggle" id="menuToggle" aria-label="Toggle navigation">
+                    <span class="menuHamburger"></span>
                 </button>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero" id="hero">
-        <div class="particles" id="particles"></div>
-        <div class="hero-content">
-            <div class="hero-text">
-                <div class="hero-greeting">
-                    <span class="typewriter" id="typewriter">Hi! I'm Kostiantyn</span>
+    <section class="landingKostiantyn" id="landingKostiantyn">
+        <div class="landingAmbient" id="landingAmbient"></div>
+        <div class="landingBody">
+            <div class="landingNarrative">
+                <div class="landingGreeting">
+                    <span class="introTypewriter" id="introTypewriter">Hi! I'm Kostiantyn</span>
                 </div>
-                <h1 class="hero-title">Junior Game Developer</h1>
-                <p class="hero-subtitle">Unity Developer | Gameplay Programmer | Game Jam Enthusiast</p>
-                <p class="hero-description">Second-year Computer Science student at DSW Wrocław, specializing in Game Development. I build immersive gameplay systems, smart enemy AI, and interactive mechanics.</p>
-                <div class="hero-cta">
-                    <a href="#projects" class="btn btn--primary btn--lg">View My Work</a>
-                    <a href="#contact" class="btn btn--outline btn--lg">Get In Touch</a>
+                <h1 class="landingTitle">Junior Game Developer</h1>
+                <p class="landingSubtitle">Unity programming · gameplay architecture · rapid prototyping</p>
+                <p class="landingSummary">Second-year computer science student at DSW Wrocław with a focus on Unity-based AI systems, combat loops, and tactile player experiences.</p>
+                <div class="landingActions">
+                    <a href="#buildLog" class="btn btnPrimary btnLarge">View selected work</a>
+                    <a href="#contactBridge" class="btn btnOutline btnLarge">Start a conversation</a>
                 </div>
             </div>
         </div>
-        <div class="scroll-indicator">
-            <span class="scroll-text">Scroll to explore</span>
-            <div class="scroll-arrow">↓</div>
+        <div class="scrollHint">
+            <span class="scrollHintText">Scroll to explore</span>
+            <div class="scrollHintMarker" aria-hidden="true"></div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section class="about section" id="about">
+    <section class="aboutProfile bioSection" id="profileStory">
         <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-content">
-                <div class="about-image">
-                    <div class="profile-placeholder">
-                        <span class="profile-icon">👨‍💻</span>
+            <h2 class="sectionHeading">About me</h2>
+            <div class="profileLayout">
+                <div class="portraitFrame">
+                    <div class="portraitShell">
+                        <span class="portraitInitials">KK</span>
                     </div>
                 </div>
-                <div class="about-text">
-                    <p class="about-description">My goal is to combine technical skills with creative problem-solving to craft engaging player experiences. I'm passionate about creating games that not only entertain but also challenge and inspire players.</p>
-                    
-                    <div class="highlights-grid">
-                        <div class="highlight-card">
-                            <div class="highlight-icon">🎮</div>
-                            <h3>Immersive Gameplay</h3>
-                            <p>Building engaging gameplay systems that keep players invested</p>
+                <div class="profileNotes">
+                    <p class="profileIntro">I design responsive systems and AI behaviors that keep players immersed. My work blends technical execution with a practical understanding of pacing, feedback, and accessibility.</p>
+
+                    <div class="highlightGrid">
+                        <div class="highlightTile">
+                            <div class="highlightGlyph">Gameplay</div>
+                            <h3>Immersive Systems</h3>
+                            <p>Combat loops, traversal, and progression tuned through rapid iteration.</p>
                         </div>
-                        <div class="highlight-card">
-                            <div class="highlight-icon">🤖</div>
-                            <h3>Smart AI Development</h3>
-                            <p>Creating intelligent enemy behaviors and decision systems</p>
+                        <div class="highlightTile">
+                            <div class="highlightGlyph">AI</div>
+                            <h3>Adaptive Behaviors</h3>
+                            <p>Decision trees and state machines built for clarity, challenge, and maintainability.</p>
                         </div>
-                        <div class="highlight-card">
-                            <div class="highlight-icon">⚡</div>
-                            <h3>Interactive Mechanics</h3>
-                            <p>Designing responsive and intuitive game mechanics</p>
+                        <div class="highlightTile">
+                            <div class="highlightGlyph">UX</div>
+                            <h3>Player Feedback</h3>
+                            <p>Signals, visual polish, and timing cues that reinforce the core mechanics.</p>
                         </div>
                     </div>
 
-                    <div class="languages-section">
+                    <div class="languageRoster">
                         <h3>Languages</h3>
-                        <div class="languages-grid">
-                            <div class="language-item">
-                                <span class="language-flag">🇬🇧</span>
-                                <div class="language-info">
-                                    <span class="language-name">English</span>
-                                    <span class="language-level">B2+ - Professional</span>
+                        <div class="languageList">
+                            <div class="languageRow">
+                                <span class="languageTitle">English</span>
+                                <span class="languageLevel">B2+ · Professional</span>
+                            </div>
+                            <div class="languageRow">
+                                <span class="languageTitle">Ukrainian</span>
+                                <span class="languageLevel">Native</span>
+                            </div>
+                            <div class="languageRow">
+                                <span class="languageTitle">Polish</span>
+                                <span class="languageLevel">B1+ · Conversational</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="craftShowcase bioSection" id="craftCatalogue">
+        <div class="container">
+            <h2 class="sectionHeading">Tech stack</h2>
+            <div class="skillGrid">
+                <article class="skillBlock">
+                    <header class="skillHeader">
+                        <span class="skillGlyph">GD</span>
+                        <h3>Game development</h3>
+                    </header>
+                    <div class="skillTags">
+                        <span class="skillTag">Unity</span><span class="skillTag">C#</span><span class="skillTag">URP</span>
+                        <span class="skillTag">Animator Controller</span>
+                        <span class="skillTag">Physics authoring</span>
+                        <span class="skillTag">2D/3D gameplay</span>
+                        <span class="skillTag">Enemy AI</span>
+                    </div>
+                </article>
+
+                <article class="skillBlock">
+                    <header class="skillHeader">
+                        <span class="skillGlyph">ENG</span>
+                        <h3>Programming & backend</h3>
+                    </header>
+                    <div class="skillTags">
+                        <span class="skillTag">Python</span><span class="skillTag">C++</span>
+                        <span class="skillTag">Flask</span><span class="skillTag">FastAPI</span>
+                        <span class="skillTag">Git</span><span class="skillTag">GitHub Actions</span>
+                        <span class="skillTag">AWS basics</span>
+                    </div>
+                </article>
+
+                <article class="skillBlock">
+                    <header class="skillHeader">
+                        <span class="skillGlyph">ML</span>
+                        <h3>Machine learning</h3>
+                    </header>
+                    <div class="skillTags">
+                        <span class="skillTag">scikit-learn</span><span class="skillTag">pandas</span>
+                        <span class="skillTag">numpy</span><span class="skillTag">TensorFlow / Keras</span>
+                        <span class="skillTag">Data pipelines</span>
+                    </div>
+                </article>
+
+                <article class="skillBlock">
+                    <header class="skillHeader">
+                        <span class="skillGlyph">Tools</span>
+                        <h3>Workflow</h3>
+                    </header>
+                    <div class="skillTags">
+                        <span class="skillTag">Unity Editor</span><span class="skillTag">Visual Studio</span>
+                        <span class="skillTag">JetBrains Rider</span><span class="skillTag">GitHub</span>
+                        <span class="skillTag">Fork</span><span class="skillTag">LeetCode</span>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="buildShowcase bioSection" id="buildLog">
+        <div class="container">
+            <h2 class="sectionHeading">Featured projects</h2>
+
+            <div class="filterShelf">
+                <button class="filterButton active" data-filter="all">All</button>
+                <button class="filterButton" data-filter="unity">Unity</button>
+                <button class="filterButton" data-filter="python">Python</button>
+                <button class="filterButton" data-filter="game-jams">Game jams</button>
+                <button class="filterButton" data-filter="ml">Machine learning</button>
+            </div>
+
+            <div class="projectGrid">
+                <article class="projectPanel" data-category="ml python">
+                    <div class="projectHeader">
+                        <h3>ML weather forecasting platform</h3>
+                        <div class="projectStack">
+                            <span class="stackTag">Python 3.9+</span><span class="stackTag">scikit-learn</span>
+                            <span class="stackTag">pandas</span><span class="stackTag">numpy</span>
+                        </div>
+                    </div>
+                    <div class="projectMeta">
+                        <span class="projectTimeline">Multi-week development cycle</span>
+                    </div>
+                    <p class="projectExcerpt">Built a weather prediction toolkit with multiple models, real-time ingestion, and interchangeable CLI/GUI modes tailored to different user workflows.</p>
+                    <div class="projectDetails" style="display:none;">
+                        <h4>Key features</h4>
+                        <ul>
+                            <li>Implemented six complementary models including Random Forest and Elastic Net.</li>
+                            <li>Automated data collection, cleaning, and feature engineering stages.</li>
+                            <li>Unified evaluation dashboard with cross-validation metrics.</li>
+                            <li>CLI, GUI, and demo flows share a common service layer.</li>
+                            <li>103 automated tests guarding regression across interfaces.</li>
+                        </ul>
+                        <div class="projectOutcome">
+                            <strong>Result:</strong> Production-ready pipeline with actionable forecasts and transparent metrics.
+                        </div>
+                    </div>
+                    <button class="expandButton">Learn more</button>
+                </article>
+
+                <article class="projectPanel" data-category="unity game-jams">
+                    <div class="projectHeader">
+                        <h3>Card battle prototype</h3>
+                        <div class="projectStack">
+                            <span class="stackTag">Unity</span><span class="stackTag">C#</span>
+                        </div>
+                    </div>
+                    <div class="projectMeta">
+                        <span class="projectTimeline">48-hour jam</span>
+                        <span class="projectRole">Gameplay programmer</span>
+                    </div>
+                    <p class="projectExcerpt">Designed and implemented a responsive tactical card loop with positional play, ability synergies, and a lightweight rules engine.</p>
+                    <div class="projectDetails" style="display:none;">
+                        <h4>Highlights</h4>
+                        <ul>
+                            <li>Card metadata system covering attack, defense, and resource mechanics.</li>
+                            <li>Snappy card movement and hover states tuned for clarity.</li>
+                            <li>Dynamic card modifiers and temporary buffs.</li>
+                            <li>Turn manager coordinating player and AI cadence.</li>
+                        </ul>
+                        <div class="projectOutcome">
+                            <strong>Result:</strong> Polished jam build with strong feel and replayability.</div>
+                    </div>
+                    <button class="expandButton">Learn more</button>
+                </article>
+
+                <article class="projectPanel" data-category="unity game-jams">
+                    <div class="projectHeader">
+                        <h3>Game jam anthology</h3>
+                        <div class="projectStack">
+                            <span class="stackTag">Unity 2D/3D</span><span class="stackTag">C#</span>
+                        </div>
+                    </div>
+                    <div class="projectMeta">
+                        <span class="projectRole">Systems designer & programmer</span>
+                    </div>
+                    <p class="projectExcerpt">Collection of collaborative jam entries focused on fast prototyping, enemy scripting, and UI feedback loops.</p>
+                    <div class="projectDetails" style="display:none;">
+                        <h4>Highlights</h4>
+                        <ul>
+                            <li>UI and HUD layers tuned for each theme.</li>
+                            <li>Enemy patrol, chase, and attack behaviors ready to extend.</li>
+                            <li>Interactable objects such as doors, pickups, and triggers.</li>
+                            <li>Scene flow management for multi-level experiences.</li>
+                        </ul>
+                        <div class="projectOutcome">
+                            <strong>Result:</strong> Demonstrated ability to ship within tight deadlines while sustaining quality.</div>
+                    </div>
+                    <button class="expandButton">Learn more</button>
+                </article>
+
+                <article class="projectPanel" data-category="python">
+                    <div class="projectHeader">
+                        <h3>Face comparison toolkit</h3>
+                        <div class="projectStack">
+                            <span class="stackTag">Python</span><span class="stackTag">OpenCV</span><span class="stackTag">Tkinter</span>
+                        </div>
+                    </div>
+                    <div class="projectMeta">
+                        <span class="projectTimeline">Two-week build</span>
+                    </div>
+                    <p class="projectExcerpt">Desktop utility exploring feature extraction and similarity scoring with an approachable interface for quick experiments.</p>
+                    <div class="projectDetails" style="display:none;">
+                        <h4>Highlights</h4>
+                        <ul>
+                            <li>Drag-and-drop image ingestion with validation.</li>
+                            <li>Face detection pipeline using Haar cascades.</li>
+                            <li>Visual overlays communicating match confidence.</li>
+                            <li>Modular architecture for alternative models.</li>
+                        </ul>
+                        <div class="projectOutcome">
+                            <strong>Result:</strong> Solid showcase of computer vision fundamentals with extendable modules.</div>
+                    </div>
+                    <button class="expandButton">Learn more</button>
+                </article>
+
+                <article class="projectPanel" data-category="unity">
+                    <div class="projectHeader">
+                        <h3>Indie mobile RPG</h3>
+                        <div class="projectStatus">In development</div>
+                        <div class="projectStack">
+                            <span class="stackTag">Unity</span><span class="stackTag">C#</span><span class="stackTag">Android</span>
+                        </div>
+                    </div>
+                    <div class="projectMeta">
+                        <span class="projectPlatform">Android target</span>
+                        <span class="projectRole">Enemy AI programmer</span>
+                    </div>
+                    <p class="projectExcerpt">Collaborative combat-focused RPG emphasising enemy variety, encounter pacing, and boss mechanics tuned for touch controls.</p>
+                    <div class="projectDetails" style="display:none;">
+                        <h4>Highlights</h4>
+                        <ul>
+                            <li>AI state machines with reusable decision helpers.</li>
+                            <li>Movement blends and pathfinding tuned for mobile performance.</li>
+                            <li>Boss encounters integrating telegraphed attacks and phase changes.</li>
+                            <li>Combat systems integrated with progression and loot.</li>
+                        </ul>
+                        <div class="projectOutcome">
+                            <strong>Goal:</strong> Deliver a vertical slice with polished encounters.</div>
+                    </div>
+                    <button class="expandButton">Learn more</button>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="learningPath bioSection" id="learningTimeline">
+        <div class="container">
+            <h2 class="sectionHeading">Education</h2>
+            <div class="studyTimeline">
+                <div class="timelineEntry">
+                    <div class="timelineDot"></div>
+                    <div class="timelineContent">
+                        <div class="learningPanel">
+                            <div class="learningHeader">
+                                <h3>DSW University, Wrocław (Poland)</h3>
+                                <div class="learningStatus">In progress · Year 2</div>
+                            </div>
+                            <p class="learningDegree">B.Sc. Computer Science — Game Development Specialization</p>
+                            <div class="learningDates">
+                                <span class="timelineDate">Oct 2024 - Mar 2028</span>
+                            </div>
+                            <div class="learningProgress">
+                                <div class="progressTrack">
+                                    <div class="progressFill" style="width:25%"></div>
                                 </div>
-                            </div>
-                            <div class="language-item">
-                                <span class="language-flag">🇺🇦</span>
-                                <div class="language-info">
-                                    <span class="language-name">Ukrainian</span>
-                                    <span class="language-level">Native</span>
-                                </div>
-                            </div>
-                            <div class="language-item">
-                                <span class="language-flag">🇵🇱</span>
-                                <div class="language-info">
-                                    <span class="language-name">Polish</span>
-                                    <span class="language-level">B1+ - Conversational</span>
-                                </div>
+                                <span class="progressLabel">25% complete</span>
                             </div>
                         </div>
                     </div>
@@ -123,310 +344,49 @@
         </div>
     </section>
 
-    <!-- Skills Section -->
-    <section class="skills section" id="skills">
+    <section class="collabInvitation bioSection">
         <div class="container">
-            <h2 class="section-title">Tech Stack</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <div class="skill-header">
-                        <span class="skill-icon">🎮</span>
-                        <h3>Game Development</h3>
-                    </div>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Unity</span>
-                        <span class="skill-tag">C#</span>
-                        <span class="skill-tag">URP</span>
-                        <span class="skill-tag">Animator Controller</span>
-                        <span class="skill-tag">Physics Systems</span>
-                        <span class="skill-tag">2D/3D Gameplay</span>
-                        <span class="skill-tag">AI Behavior</span>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <div class="skill-header">
-                        <span class="skill-icon">💻</span>
-                        <h3>Programming &amp; Backend</h3>
-                    </div>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">C++</span>
-                        <span class="skill-tag">Flask</span>
-                        <span class="skill-tag">FastAPI</span>
-                        <span class="skill-tag">Git</span>
-                        <span class="skill-tag">GitHub Actions</span>
-                        <span class="skill-tag">AWS (basics)</span>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <div class="skill-header">
-                        <span class="skill-icon">🤖</span>
-                        <h3>Machine Learning</h3>
-                    </div>
-                    <div class="skill-tags">
-                        <span class="skill-tag">scikit-learn</span>
-                        <span class="skill-tag">pandas</span>
-                        <span class="skill-tag">numpy</span>
-                        <span class="skill-tag">TensorFlow/Keras</span>
-                        <span class="skill-tag">Data Preprocessing</span>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <div class="skill-header">
-                        <span class="skill-icon">🛠️</span>
-                        <h3>Tools &amp; Workflow</h3>
-                    </div>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Unity Editor</span>
-                        <span class="skill-tag">Visual Studio</span>
-                        <span class="skill-tag">Rider</span>
-                        <span class="skill-tag">GitHub</span>
-                        <span class="skill-tag">Fork</span>
-                        <span class="skill-tag">LeetCode</span>
-                    </div>
+            <div class="collabContent">
+                <h2 class="collabTitle">Let's build something ambitious together</h2>
+                <p class="collabPitch">I am looking for Unity gameplay or AI engineering roles where rapid learning and experimentation are valued. If your team needs someone who obsesses over feel and iteration speed, let's talk.</p>
+                <div class="collabActions">
+                    <a href="#contactBridge" class="btn btnPrimary btnLarge ctaPulse">Get in touch</a>
+                    <a href="https://github.com/xmkos" target="_blank" class="btn btnOutline btnLarge">View GitHub</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Projects Section -->
-    <section class="projects section" id="projects">
+    <section class="contactBridge bioSection" id="contactBridge">
         <div class="container">
-            <h2 class="section-title">Featured Projects</h2>
-            
-            <div class="project-filters">
-                <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="unity">Unity</button>
-                <button class="filter-btn" data-filter="python">Python</button>
-                <button class="filter-btn" data-filter="game-jams">Game Jams</button>
-                <button class="filter-btn" data-filter="ml">ML</button>
-            </div>
-
-            <div class="projects-grid">
-                <div class="project-card" data-category="ml python">
-                    <div class="project-header">
-                        <h3>🌦️ ML-Based Weather Forecasting System</h3>
-                        <div class="project-tech">
-                            <span class="tech-tag">Python 3.9+</span>
-                            <span class="tech-tag">scikit-learn</span>
-                            <span class="tech-tag">pandas</span>
-                            <span class="tech-tag">numpy</span>
-                        </div>
-                    </div>
-                    <div class="project-meta">
-                        <span class="project-duration">⏱️ Multi-week development cycle</span>
-                    </div>
-                    <p class="project-description">Advanced weather prediction tool utilizing multiple machine learning algorithms and real-time API integration. Built comprehensive system with CLI, GUI, and demo modes for flexible user interaction.</p>
-                    <div class="project-details" style="display: none;">
-                        <h4>🔧 Key Features:</h4>
-                        <ul>
-                            <li>Implemented 6 ML models: Random Forest, Gradient Boosting, Ridge Regression, Elastic Net, SVM, Neural Networks</li>
-                            <li>Real-time weather data collection and preprocessing</li>
-                            <li>Feature engineering and model evaluation pipeline</li>
-                            <li>Multiple user interfaces (CLI, GUI, demo mode)</li>
-                            <li>Comprehensive testing suite (~103 tests) with robust error handling</li>
-                        </ul>
-                        <div class="project-outcome">
-                            <strong>🎯 Outcome:</strong> Fully functional prediction system with accurate forecasts and intuitive interfaces
-                        </div>
-                    </div>
-                    <button class="expand-btn">Learn More</button>
-                </div>
-
-                <div class="project-card" data-category="unity game-jams">
-                    <div class="project-header">
-                        <h3>🃏 Card Battle System</h3>
-                        <div class="project-tech">
-                            <span class="tech-tag">Unity</span>
-                            <span class="tech-tag">C#</span>
-                        </div>
-                    </div>
-                    <div class="project-meta">
-                        <span class="project-duration">⏱️ 48-hour game jam</span>
-                        <span class="project-role">💡 Gameplay Programmer</span>
-                    </div>
-                    <p class="project-description">A turn-based card game developed during a 48-hour game jam. Designed and implemented a complete card combat system with dynamic gameplay mechanics.</p>
-                    <div class="project-details" style="display: none;">
-                        <h4>🔧 Key Features:</h4>
-                        <ul>
-                            <li>Card logic system (attack, defense, cost mechanics)</li>
-                            <li>Smooth card movement and positioning on the battlefield</li>
-                            <li>Dynamic card attributes (health, damage, special abilities)</li>
-                            <li>Turn-based flow with player/enemy interaction</li>
-                        </ul>
-                        <div class="project-outcome">
-                            <strong>🎯 Outcome:</strong> Functional prototype with polished card behaviors and responsive UI
-                        </div>
-                    </div>
-                    <button class="expand-btn">Learn More</button>
-                </div>
-
-                <div class="project-card" data-category="unity game-jams">
-                    <div class="project-header">
-                        <h3>🕹️ Game Jam Collection</h3>
-                        <div class="project-tech">
-                            <span class="tech-tag">Unity 2D/3D</span>
-                            <span class="tech-tag">C#</span>
-                        </div>
-                    </div>
-                    <div class="project-meta">
-                        <span class="project-role">💡 Gameplay Programmer / Systems Designer</span>
-                    </div>
-                    <p class="project-description">Participated in multiple game jams with focus on rapid prototyping and core gameplay systems. Explored diverse mechanics and team collaboration under tight deadlines.</p>
-                    <div class="project-details" style="display: none;">
-                        <h4>🔧 Key Contributions:</h4>
-                        <ul>
-                            <li>UI system implementation and player feedback</li>
-                            <li>Enemy behavior scripting (patrol, chase, attack patterns)</li>
-                            <li>Interactive objects (doors, pickups, triggers, switches)</li>
-                            <li>Scene management and level transitions</li>
-                        </ul>
-                        <div class="project-outcome">
-                            <strong>🎯 Takeaway:</strong> Strong prototyping skills and ability to deliver functional gameplay loops quickly
-                        </div>
-                    </div>
-                    <button class="expand-btn">Learn More</button>
-                </div>
-
-                <div class="project-card" data-category="python">
-                    <div class="project-header">
-                        <h3>🧠 Face Comparison Tool</h3>
-                        <div class="project-tech">
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">OpenCV</span>
-                            <span class="tech-tag">Tkinter</span>
-                        </div>
-                    </div>
-                    <div class="project-meta">
-                        <span class="project-duration">⏱️ 2 weeks</span>
-                    </div>
-                    <p class="project-description">Desktop application for facial similarity analysis using computer vision. Built as a learning project to explore image processing and algorithm implementation.</p>
-                    <div class="project-details" style="display: none;">
-                        <h4>🔧 Key Features:</h4>
-                        <ul>
-                            <li>Image import functionality</li>
-                            <li>Face detection algorithm</li>
-                            <li>Visual comparison results</li>
-                            <li>Intuitive UI design</li>
-                        </ul>
-                        <div class="project-outcome">
-                            <strong>🎯 Outcome:</strong> Functional tool demonstrating computer vision skills
-                        </div>
-                    </div>
-                    <button class="expand-btn">Learn More</button>
-                </div>
-
-                <div class="project-card" data-category="unity">
-                    <div class="project-header">
-                        <h3>⚔️ Indie Mobile RPG</h3>
-                        <div class="project-status">In Development</div>
-                        <div class="project-tech">
-                            <span class="tech-tag">Unity</span>
-                            <span class="tech-tag">C#</span>
-                            <span class="tech-tag">Android</span>
-                        </div>
-                    </div>
-                    <div class="project-meta">
-                        <span class="project-platform">📱 Android</span>
-                        <span class="project-role">💡 Enemy AI Programmer</span>
-                    </div>
-                    <p class="project-description">Collaborative mobile RPG project for Android with team of developers. Currently in early prototyping phase with focus on combat systems and AI architecture.</p>
-                    <div class="project-details" style="display: none;">
-                        <h4>🔧 My Responsibilities:</h4>
-                        <ul>
-                            <li>Enemy AI logic and decision trees</li>
-                            <li>Movement behaviors and pathfinding</li>
-                            <li>Boss encounter mechanics</li>
-                            <li>Combat system integration</li>
-                        </ul>
-                        <div class="project-outcome">
-                            <strong>📅 Goal:</strong> Vertical slice prototype
-                        </div>
-                    </div>
-                    <button class="expand-btn">Learn More</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Education Section -->
-    <section class="education section" id="education">
-        <div class="container">
-            <h2 class="section-title">Education</h2>
-            <div class="education-timeline">
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="education-card">
-                            <div class="education-header">
-                                <h3>🎓 DSW University, Wrocław (Poland)</h3>
-                                <div class="education-status">In Progress - 2nd Year</div>
-                            </div>
-                            <p class="education-degree">B.Sc. Computer Science – Game Development Specialization</p>
-                            <div class="education-timeline-dates">
-                                <span class="timeline-date">Oct 2024 → Mar 2028</span>
-                            </div>
-                            <div class="education-progress">
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 25%;"></div>
-                                </div>
-                                <span class="progress-text">25% Complete</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta section">
-        <div class="container">
-            <div class="cta-content">
-                <h2 class="cta-title">Let's Build Something Amazing Together!</h2>
-                <p class="cta-description">Actively seeking internship or junior Unity developer positions. Ready to learn, contribute, and grow alongside a passionate development team!</p>
-                <div class="cta-actions">
-                    <a href="#contact" class="btn btn--primary btn--lg pulse">Get In Touch</a>
-                    <a href="https://github.com/xmkos" target="_blank" class="btn btn--outline btn--lg">View GitHub</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact section" id="contact">
-        <div class="container">
-            <h2 class="section-title">Let's Connect</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <div class="contact-icon">📧</div>
-                        <div class="contact-details">
-                            <h3>Email</h3>
+            <h2 class="sectionHeading">Let's connect</h2>
+            <div class="contactLayout">
+                <div class="contactDetails">
+                    <div class="contactRow">
+                        <div class="contactGlyph">Email</div>
+                        <div class="contactInfo">
+                            <h3>Reach out</h3>
                             <a href="mailto:keiiji.work@gmail.com">keiiji.work@gmail.com</a>
                         </div>
                     </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">📍</div>
-                        <div class="contact-details">
-                            <h3>Location</h3>
+                    <div class="contactRow">
+                        <div class="contactGlyph">Location</div>
+                        <div class="contactInfo">
+                            <h3>Currently based in</h3>
                             <span>Wrocław, Poland</span>
                         </div>
                     </div>
                 </div>
-                <div class="contact-social">
-                    <h3>Find Me Online</h3>
-                    <div class="social-links">
-                        <a href="https://github.com/xmkos" target="_blank" class="social-link">
-                            <span class="social-icon">💻</span>
-                            <span>GitHub</span>
+                <div class="contactElsewhere">
+                    <h3>Elsewhere online</h3>
+                    <div class="socialWrap">
+                        <a href="https://github.com/xmkos" target="_blank" class="socialEntry">
+                            <span class="socialGlyph">GitHub</span>
+                            <span>Kostiantyn on GitHub</span>
                         </a>
-                        <a href="https://leetcode.com/u/xmkos" target="_blank" class="social-link">
-                            <span class="social-icon">🌍</span>
-                            <span>LeetCode</span>
+                        <a href="https://leetcode.com/u/xmkos" target="_blank" class="socialEntry">
+                            <span class="socialGlyph">LeetCode</span>
+                            <span>Problem solving log</span>
                         </a>
                     </div>
                 </div>
@@ -434,16 +394,13 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
+    <footer class="siteFooter">
         <div class="container">
-            <div class="footer-content">
+            <div class="footerNotes">
                 <p>&copy; 2025 Kostiantyn Kovalchuk. All rights reserved.</p>
-                <p class="footer-tagline">Made with Unity spirit 🎮</p>
+                <p class="footerSignature">Crafted with an eye for Unity detail.</p>
             </div>
-            <button class="back-to-top" id="back-to-top" aria-label="Back to top">
-                ↑
-            </button>
+            <button class="backToTop" id="backToTop" aria-label="Back to top">Top</button>
         </div>
     </footer>
 

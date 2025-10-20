@@ -1,500 +1,278 @@
-// Application State
-const state = {
-    isMenuOpen: false,
-    activeSection: 'hero',
-    isLoaded: false,
-    particles: []
-};
+const state = { isMenuOpen: false, activeSection: 'landingKostiantyn', isLoaded: false, particles: [] };
 
-// DOM Elements
 const elements = {
     loader: null,
     navbar: null,
     navLinks: null,
-    mobileMenuToggle: null,
+    menuToggle: null,
     navMenu: null,
-
     typewriter: null,
     particlesContainer: null,
     backToTop: null,
-    filterBtns: null,
+    filterButtons: null,
     projectCards: null,
-    expandBtns: null
+    expandButtons: null
 };
 
-// Initialize application
 function init() {
     cacheDOM();
-    bindEvents();
-    setupIntersectionObserver();
-    initParticles();
-    initTypewriter();
-    showLoader();
+    wireEvents();
+    watchSections();
+    prepParticles();
+    runTypewriter();
+    fadeLoader();
 }
 
-// Cache DOM elements
 function cacheDOM() {
-    elements.loader = document.getElementById('loader');
-    elements.navbar = document.getElementById('navbar');
-    elements.navLinks = document.querySelectorAll('.nav-link');
-    elements.mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-    elements.navMenu = document.getElementById('nav-menu');
-
-    elements.typewriter = document.getElementById('typewriter');
-    elements.particlesContainer = document.getElementById('particles');
-    elements.backToTop = document.getElementById('back-to-top');
-    elements.filterBtns = document.querySelectorAll('.filter-btn');
-    elements.projectCards = document.querySelectorAll('.project-card');
-    elements.expandBtns = document.querySelectorAll('.expand-btn');
+    elements.loader = document.getElementById('portfolioLoader');
+    elements.navbar = document.getElementById('siteNav');
+    elements.navLinks = document.querySelectorAll('.menuAnchor');
+    elements.menuToggle = document.getElementById('menuToggle');
+    elements.navMenu = document.getElementById('menuLinks');
+    elements.typewriter = document.getElementById('introTypewriter');
+    elements.particlesContainer = document.getElementById('landingAmbient');
+    elements.backToTop = document.getElementById('backToTop');
+    elements.filterButtons = document.querySelectorAll('.filterButton');
+    elements.projectCards = document.querySelectorAll('.projectPanel');
+    elements.expandButtons = document.querySelectorAll('.expandButton');
 }
 
-// Bind event listeners
-function bindEvents() {
-    // Navigation
-    elements.navLinks.forEach(link => {
-        link.addEventListener('click', handleNavClick);
-    });
-
-    // Mobile menu toggle
-    elements.mobileMenuToggle?.addEventListener('click', toggleMobileMenu);
-
-
-
-    // Back to top
+function wireEvents() {
+    elements.navLinks.forEach(anchor => anchor.addEventListener('click', handleNavClick));
+    elements.menuToggle?.addEventListener('click', toggleMobileMenu);
     elements.backToTop?.addEventListener('click', scrollToTop);
-
-    // Project filters
-    elements.filterBtns.forEach(btn => {
-        btn.addEventListener('click', handleFilterClick);
-    });
-
-    // Project expand buttons
-    elements.expandBtns.forEach(btn => {
-        btn.addEventListener('click', handleExpandClick);
-    });
-
-    // Scroll events
-    window.addEventListener('scroll', throttle(handleScroll, 16));
-    window.addEventListener('resize', throttle(handleResize, 100));
-
-    // Close mobile menu when clicking outside
+    elements.filterButtons.forEach(btn => btn.addEventListener('click', handleFilterClick));
+    elements.expandButtons.forEach(btn => btn.addEventListener('click', toggleProjectDetails));
+    window.addEventListener('scroll', throttle(handleScroll, 20));
+    window.addEventListener('resize', throttle(handleResize, 120));
     document.addEventListener('click', handleOutsideClick);
-
-    // Keyboard navigation
     document.addEventListener('keydown', handleKeyDown);
+    // TODO: add keyboard shortcuts for section jumps
 }
 
-// Navigation click handler
-function handleNavClick(e) {
-    e.preventDefault();
-    const targetId = e.target.getAttribute('href').slice(1);
-    const targetElement = document.getElementById(targetId);
-    
-    if (targetElement) {
-        const offsetTop = targetElement.offsetTop - 80; // Account for fixed navbar
-        window.scrollTo({
-            top: offsetTop,
-            behavior: 'smooth'
-        });
+function handleNavClick(event) {
+    event.preventDefault();
+    const targetId = event.currentTarget.getAttribute('href').slice(1);
+    const target = document.getElementById(targetId);
+    if (target) {
+        const offset = target.offsetTop - 80;
+        window.scrollTo({ top: offset, behavior: 'smooth' });
     }
-
-    // Close mobile menu if open
-    if (state.isMenuOpen) {
-        toggleMobileMenu();
-    }
-
-    // Update active nav link
-    updateActiveNavLink(targetId);
+    if (state.isMenuOpen) toggleMobileMenu();
+    highlightNav(targetId);
 }
 
-// Update active navigation link
-function updateActiveNavLink(activeId) {
+function highlightNav(id) {
     elements.navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${activeId}`) {
-            link.classList.add('active');
-        }
+        link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
     });
-    state.activeSection = activeId;
+    state.activeSection = id;
 }
 
-// Mobile menu toggle
 function toggleMobileMenu() {
     state.isMenuOpen = !state.isMenuOpen;
     elements.navMenu.classList.toggle('active', state.isMenuOpen);
-    elements.mobileMenuToggle.classList.toggle('active', state.isMenuOpen);
-    
-    // Prevent body scroll when menu is open
+    elements.menuToggle.classList.toggle('active', state.isMenuOpen);
     document.body.style.overflow = state.isMenuOpen ? 'hidden' : '';
 }
 
-
-
-// Scroll handler
 function handleScroll() {
-    const scrollY = window.scrollY;
-    
-    // Update navbar appearance
-    if (scrollY > 50) {
+    const y = window.scrollY;
+    if (y > 50) {
         elements.navbar?.classList.add('scrolled');
     } else {
         elements.navbar?.classList.remove('scrolled');
     }
-
-    // Show/hide back to top button
-    if (scrollY > 500) {
+    if (y > 500) {
         elements.backToTop?.classList.add('show');
     } else {
         elements.backToTop?.classList.remove('show');
     }
-
-    // Update active section based on scroll position
-    updateActiveSectionOnScroll();
+    syncActiveSection();
 }
 
-// Update active section based on scroll position
-function updateActiveSectionOnScroll() {
-    const sections = ['hero', 'about', 'skills', 'projects', 'education', 'contact'];
-    const scrollPosition = window.scrollY + 100;
-
-    for (let i = sections.length - 1; i >= 0; i--) {
-        const section = document.getElementById(sections[i]);
-        if (section && section.offsetTop <= scrollPosition) {
-            if (state.activeSection !== sections[i]) {
-                updateActiveNavLink(sections[i]);
-            }
+function syncActiveSection() {
+    const ids = ['landingKostiantyn', 'profileStory', 'craftCatalogue', 'buildLog', 'learningTimeline', 'contactBridge'];
+    const marker = window.scrollY + 110;
+    for (let index = ids.length - 1; index >= 0; index--) {
+        const section = document.getElementById(ids[index]);
+        if (section && section.offsetTop <= marker) {
+            if (state.activeSection !== ids[index]) highlightNav(ids[index]);
             break;
         }
     }
 }
 
-// Scroll to top
 function scrollToTop() {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Handle resize
 function handleResize() {
-    // Close mobile menu on resize to desktop
-    if (window.innerWidth > 768 && state.isMenuOpen) {
-        toggleMobileMenu();
-    }
-
-    // Reinitialize particles on resize
-    if (elements.particlesContainer) {
-        initParticles();
-    }
+    if (window.innerWidth > 768 && state.isMenuOpen) toggleMobileMenu();
+    if (elements.particlesContainer) prepParticles();
 }
 
-// Handle outside clicks (close mobile menu)
-function handleOutsideClick(e) {
-    if (state.isMenuOpen && 
-        !elements.navMenu.contains(e.target) && 
-        !elements.mobileMenuToggle.contains(e.target)) {
-        toggleMobileMenu();
-    }
+function handleOutsideClick(event) {
+    if (!state.isMenuOpen) return;
+    if (elements.navMenu.contains(event.target)) return;
+    if (elements.menuToggle.contains(event.target)) return;
+    toggleMobileMenu();
 }
 
-// Keyboard navigation
-function handleKeyDown(e) {
-    // Close mobile menu with Escape key
-    if (e.key === 'Escape' && state.isMenuOpen) {
-        toggleMobileMenu();
-    }
-
-
+function handleKeyDown(event) {
+    if (event.key === 'Escape' && state.isMenuOpen) toggleMobileMenu();
+    // TODO: surface a focus trap for the mobile menu
 }
 
-// Project filter handler
-function handleFilterClick(e) {
-    const filter = e.target.getAttribute('data-filter');
-    
-    // Update active filter button
-    elements.filterBtns.forEach(btn => btn.classList.remove('active'));
-    e.target.classList.add('active');
-
-    // Filter projects
+function handleFilterClick(event) {
+    const filter = event.currentTarget.getAttribute('data-filter');
+    elements.filterButtons.forEach(btn => btn.classList.toggle('active', btn === event.currentTarget));
     filterProjects(filter);
 }
 
-// Filter projects
 function filterProjects(filter) {
     elements.projectCards.forEach(card => {
         const categories = card.getAttribute('data-category').split(' ');
-        
-        if (filter === 'all' || categories.includes(filter)) {
+        const visible = filter === 'all' || categories.includes(filter);
+        if (visible) {
             card.style.display = 'block';
             card.classList.remove('hidden');
-            // Trigger animation
             setTimeout(() => {
                 card.style.opacity = '1';
                 card.style.transform = 'translateY(0)';
-            }, 100);
+            }, 80);
         } else {
             card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
+            card.style.transform = 'translateY(24px)';
             setTimeout(() => {
                 card.style.display = 'none';
                 card.classList.add('hidden');
-            }, 300);
+            }, 260);
         }
     });
 }
 
-// Project expand handler
-function handleExpandClick(e) {
-    const button = e.target;
-    const card = button.closest('.project-card');
-    const details = card.querySelector('.project-details');
-    
-    if (details.style.display === 'none' || !details.style.display) {
+function toggleProjectDetails(event) {
+    const button = event.currentTarget;
+    const panel = button.closest('.projectPanel');
+    const details = panel.querySelector('.projectDetails');
+    const willOpen = details.style.display === 'none' || !details.style.display;
+    if (willOpen) {
         details.style.display = 'block';
-        button.textContent = 'Show Less';
-        // Animate in
+        button.textContent = 'Show less';
         setTimeout(() => {
             details.style.opacity = '1';
             details.style.transform = 'translateY(0)';
-        }, 10);
+        }, 12);
     } else {
         details.style.opacity = '0';
-        details.style.transform = 'translateY(-10px)';
+        details.style.transform = 'translateY(-12px)';
         setTimeout(() => {
             details.style.display = 'none';
-            button.textContent = 'Learn More';
-        }, 300);
+            button.textContent = 'Learn more';
+        }, 220);
     }
 }
 
-// Initialize particles animation
-function initParticles() {
+function prepParticles() {
     if (!elements.particlesContainer) return;
-    
-    // Clear existing particles
     elements.particlesContainer.innerHTML = '';
     state.particles = [];
-
-    const particleCount = Math.min(50, Math.floor(window.innerWidth / 30));
-    
-    for (let i = 0; i < particleCount; i++) {
-        createParticle();
-    }
-
+    const count = Math.min(40, Math.floor(window.innerWidth / 40));
+    for (let i = 0; i < count; i++) createParticle();
     animateParticles();
 }
 
-// Create a single particle
 function createParticle() {
-    const particle = document.createElement('div');
-    particle.className = 'particle';
-    
-    const size = Math.random() * 4 + 2;
+    const node = document.createElement('div');
+    node.className = 'ambientParticle';
+    const size = Math.random() * 3 + 2;
     const x = Math.random() * window.innerWidth;
     const y = Math.random() * window.innerHeight;
-    const speedX = (Math.random() - 0.5) * 0.5;
-    const speedY = (Math.random() - 0.5) * 0.5;
-    
-    particle.style.width = `${size}px`;
-    particle.style.height = `${size}px`;
-    particle.style.left = `${x}px`;
-    particle.style.top = `${y}px`;
-    particle.style.animationDelay = `${Math.random() * 6}s`;
-    
-    elements.particlesContainer.appendChild(particle);
-    
-    state.particles.push({
-        element: particle,
-        x: x,
-        y: y,
-        speedX: speedX,
-        speedY: speedY,
-        size: size
-    });
+    const speedX = (Math.random() - 0.5) * 0.4;
+    const speedY = (Math.random() - 0.5) * 0.4;
+    node.style.width = `${size}px`;
+    node.style.height = `${size}px`;
+    node.style.left = `${x}px`;
+    node.style.top = `${y}px`;
+    node.style.animationDelay = `${Math.random() * 5}s`;
+    elements.particlesContainer.appendChild(node);
+    state.particles.push({ element: node, x, y, speedX, speedY, size });
 }
 
-// Animate particles
 function animateParticles() {
-    if (!state.isLoaded || !elements.particlesContainer) return;
-    
+    if (!state.isLoaded || !elements.particlesContainer) {
+        requestAnimationFrame(animateParticles);
+        return;
+    }
     state.particles.forEach(particle => {
         particle.x += particle.speedX;
         particle.y += particle.speedY;
-        
-        // Wrap around screen
         if (particle.x > window.innerWidth) particle.x = -particle.size;
         if (particle.x < -particle.size) particle.x = window.innerWidth;
         if (particle.y > window.innerHeight) particle.y = -particle.size;
         if (particle.y < -particle.size) particle.y = window.innerHeight;
-        
         particle.element.style.left = `${particle.x}px`;
         particle.element.style.top = `${particle.y}px`;
     });
-    
     requestAnimationFrame(animateParticles);
 }
 
-// Initialize typewriter effect
-function initTypewriter() {
+function runTypewriter() {
     if (!elements.typewriter) return;
-    
     const text = "Hi! I'm Kostiantyn";
-    const speed = 100;
     let index = 0;
-    
     elements.typewriter.textContent = '';
-    
-    function typeChar() {
+    function typeNext() {
         if (index < text.length) {
             elements.typewriter.textContent += text.charAt(index);
-            index++;
-            setTimeout(typeChar, speed);
+            index += 1;
+            setTimeout(typeNext, 95);
         }
     }
-    
-    setTimeout(typeChar, 1000); // Start after 1 second
+    setTimeout(typeNext, 900);
 }
 
-// Setup Intersection Observer for scroll animations
-function setupIntersectionObserver() {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
+function watchSections() {
+    const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animated');
-                observer.unobserve(entry.target);
-            }
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('animated');
+            observer.unobserve(entry.target);
         });
-    }, observerOptions);
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
 
-    // Observe elements for animation
-    const animateElements = document.querySelectorAll(
-        '.section-title, .about-content, .skill-category, .project-card, .education-card, .contact-item'
-    );
-    
-    animateElements.forEach((el, index) => {
-        el.classList.add('animate-on-scroll');
-        
-        // Add different animation classes
-        if (index % 3 === 0) {
-            el.classList.add('animate-fade-up');
-        } else if (index % 3 === 1) {
-            el.classList.add('animate-fade-left');
-        } else {
-            el.classList.add('animate-fade-right');
-        }
-        
-        observer.observe(el);
+    const selectors = '.sectionHeading, .profileLayout, .skillBlock, .projectPanel, .learningPanel, .contactRow, .socialEntry';
+    document.querySelectorAll(selectors).forEach((node, idx) => {
+        node.classList.add('animateTarget');
+        if (idx % 3 === 0) node.classList.add('animateRise');
+        else if (idx % 3 === 1) node.classList.add('animateSlideLeft');
+        else node.classList.add('animateSlideRight');
+        observer.observe(node);
     });
 }
 
-// Loading screen handler
-function showLoader() {
-    if (!elements.loader) return;
-    
-    // Simulate loading time
-    setTimeout(() => {
-        elements.loader.classList.add('fade-out');
+function fadeLoader() {
+    if (!elements.loader) {
         state.isLoaded = true;
-        
+        return;
+    }
+    setTimeout(() => {
+        elements.loader.classList.add('loaderFade');
+        state.isLoaded = true;
         setTimeout(() => {
             elements.loader.style.display = 'none';
-        }, 500);
-    }, 1500);
+        }, 460);
+    }, 1200);
 }
 
-// Utility functions
 function throttle(func, wait) {
     let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
+    return function throttled(...args) {
+        if (timeout) clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
     };
 }
 
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-// Smooth scrolling polyfill for older browsers
-function smoothScrollTo(element, duration = 1000) {
-    const targetPosition = element.offsetTop - 80;
-    const startPosition = window.pageYOffset;
-    const distance = targetPosition - startPosition;
-    let startTime = null;
-
-    function animation(currentTime) {
-        if (startTime === null) startTime = currentTime;
-        const timeElapsed = currentTime - startTime;
-        const run = ease(timeElapsed, startPosition, distance, duration);
-        window.scrollTo(0, run);
-        if (timeElapsed < duration) requestAnimationFrame(animation);
-    }
-
-    function ease(t, b, c, d) {
-        t /= d / 2;
-        if (t < 1) return c / 2 * t * t + b;
-        t--;
-        return -c / 2 * (t * (t - 2) - 1) + b;
-    }
-
-    requestAnimationFrame(animation);
-}
-
-// Performance monitoring
-function measurePerformance() {
-    if ('performance' in window) {
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                const perfData = performance.getEntriesByType('navigation')[0];
-                console.log(`Page load time: ${perfData.loadEventEnd - perfData.fetchStart}ms`);
-            }, 0);
-        });
-    }
-}
-
-// Error handling
-window.addEventListener('error', (e) => {
-    console.error('Application error:', e.error);
-});
-
-window.addEventListener('unhandledrejection', (e) => {
-    console.error('Unhandled promise rejection:', e.reason);
-});
-
-// Initialize application when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-} else {
-    init();
-}
-
-// Initialize performance monitoring
-measurePerformance();
-
-// Expose some functions for debugging
-if (typeof window !== 'undefined') {
-    window.portfolioApp = {
-        state,
-        elements,
-        filterProjects,
-        initParticles
-    };
-}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+else init();
