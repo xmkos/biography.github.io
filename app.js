@@ -51,9 +51,17 @@ function wireEvents() {
 
 async function loadProjects() {
     try {
+        console.log('Loading projects...');
+        console.log('Project grid element:', elements.projectGrid);
+        
         const response = await fetch('projects.json');
+        console.log('Fetch response:', response.ok);
+        
         if (!response.ok) throw new Error('Failed to load projects');
+        
         const data = await response.json();
+        console.log('Loaded projects:', data);
+        
         state.projects = data.projects;
         renderProjects(state.projects);
         
@@ -61,20 +69,29 @@ async function loadProjects() {
         elements.projectCards = document.querySelectorAll('.projectPanel');
         elements.expandButtons = document.querySelectorAll('.expandButton');
         elements.expandButtons.forEach(btn => btn.addEventListener('click', toggleProjectDetails));
+        
+        console.log('Projects rendered successfully');
     } catch (error) {
         console.error('Error loading projects:', error);
-        elements.projectGrid.innerHTML = '<p style="color: var(--color-text-muted); text-align: center; padding: 40px;">Unable to load projects. Please try again later.</p>';
+        if (elements.projectGrid) {
+            elements.projectGrid.innerHTML = '<p style="color: var(--color-text-muted); text-align: center; padding: 40px;">Unable to load projects. Please try again later.</p>';
+        }
     }
 }
 
 function renderProjects(projects) {
-    if (!elements.projectGrid) return;
+    console.log('renderProjects called with:', projects);
     
-    elements.projectGrid.innerHTML = projects.map(project => {
+    if (!elements.projectGrid) {
+        console.error('projectGrid element not found!');
+        return;
+    }
+    
+    const html = projects.map(project => {
         const metaItems = [];
-        if (project.meta.timeline) metaItems.push(`<span class="projectTimeline">${project.meta.timeline}</span>`);
-        if (project.meta.role) metaItems.push(`<span class="projectRole">${project.meta.role}</span>`);
-        if (project.meta.platform) metaItems.push(`<span class="projectPlatform">${project.meta.platform}</span>`);
+        if (project.meta && project.meta.timeline) metaItems.push(`<span class="projectTimeline">${project.meta.timeline}</span>`);
+        if (project.meta && project.meta.role) metaItems.push(`<span class="projectRole">${project.meta.role}</span>`);
+        if (project.meta && project.meta.platform) metaItems.push(`<span class="projectPlatform">${project.meta.platform}</span>`);
         
         const statusBadge = project.status ? `<div class="projectStatus">${project.status}</div>` : '';
         
@@ -102,6 +119,10 @@ function renderProjects(projects) {
             </article>
         `;
     }).join('');
+    
+    console.log('Generated HTML length:', html.length);
+    elements.projectGrid.innerHTML = html;
+    console.log('Projects inserted into DOM');
 }
 
 function handleNavClick(event) {
