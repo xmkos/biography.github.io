@@ -1,0 +1,104 @@
+{
+  "projects": [
+    {
+      "id": "ml-based-forecasting",
+      "title": "ML-based weather forecasting",
+      "categories": ["ml", "python", "time-series"],
+      "stack": ["Python"],
+      "meta": {
+        "timeline": "Multi-week development cycle"
+      },
+      "excerpt": "Weather predictor that ingests historical data to forecast short-term conditions with a reproducible pipeline.",
+      "details": {
+        "heading": "Highlights",
+        "items": [
+          "Automated data cleaning, feature engineering, and train/validate splits.",
+          "Model training with cross-validation and metrics reporting.",
+          "Configurable forecasting horizons and evaluation windows.",
+          "Lightweight CLI/notebook workflows for quick iteration."
+        ],
+        "outcome": "Actionable short-term forecasts with transparent metrics and a maintainable pipeline."
+      }
+    },
+    {
+      "id": "face-comparison-app",
+      "title": "Face comparison application",
+      "categories": ["computer-vision", "python"],
+      "stack": ["Python"],
+      "meta": {
+        "timeline": "Short sprint"
+      },
+      "excerpt": "Detects and compares faces in images to estimate similarity and flag likely matches.",
+      "details": {
+        "heading": "Highlights",
+        "items": [
+          "Drag-and-drop image ingestion with validation.",
+          "Face detection pipeline using Haar cascades.",
+          "Visual overlays communicating match confidence.",
+          "Modular architecture for alternative models."
+        ],
+        "outcome": "Practical tool to quickly verify whether two images likely depict the same person."
+      }
+    },
+    {
+      "id": "gamejam",
+      "title": "Unity game jam prototype",
+      "categories": ["game-dev", "unity"],
+      "stack": ["Unity", "C#", "ShaderLab", "HLSL"],
+      "meta": {
+        "timeline": "Game jam weekend"
+      },
+      "excerpt": "Fast-paced Unity prototype built under jam constraints, emphasizing readable combat and moment-to-moment control.",
+      "details": {
+        "heading": "Highlights",
+        "items": [
+          "AI state machines with reusable decision helpers.",
+          "Movement blends and pathfinding tuned for mobile performance.",
+          "Boss encounters integrating telegraphed attacks and phase changes.",
+          "Combat systems integrated with progression and loot."
+        ],
+        "outcome": "Playable vertical slice with tight controls and clearly telegraphed encounters."
+      }
+    },
+    {
+      "id": "gamejam2",
+      "title": "Unity game jam sequel/prototype",
+      "categories": ["game-dev", "unity"],
+      "stack": ["Unity", "C#", "ShaderLab", "HLSL"],
+      "meta": {
+        "timeline": "Game jam weekend"
+      },
+      "excerpt": "Iteration on jam mechanics with expanded encounters and stylized visuals.",
+      "details": {
+        "heading": "Highlights",
+        "items": [
+          "AI state machines with reusable decision helpers.",
+          "Movement blends and pathfinding tuned for mobile performance.",
+          "Boss encounters integrating telegraphed attacks and phase changes.",
+          "Stylized shaders and VFX authored in ShaderLab/HLSL."
+        ],
+        "outcome": "Refined prototype improving readability, difficulty curve, and visual clarity."
+      }
+    },
+    {
+      "id": "game-knight-testing",
+      "title": "Game Knight combat testbed",
+      "categories": ["game-dev", "unity"],
+      "stack": ["Unity", "C#", "ShaderLab", "HLSL"],
+      "meta": {
+        "timeline": "Prototype cycle"
+      },
+      "excerpt": "Unity sandbox focused on tuning combat feel, animation flow, and encounter pacing.",
+      "details": {
+        "heading": "Highlights",
+        "items": [
+          "AI state machines with reusable decision helpers.",
+          "Movement blends and pathfinding tuned for mobile performance.",
+          "Boss encounters integrating telegraphed attacks and phase changes.",
+          "Combat systems integrated with progression and loot."
+        ],
+        "outcome": "Reliable combat loop with responsive inputs and readable enemy behavior."
+      }
+    }
+  ]
+}

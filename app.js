@@ -1,4 +1,4 @@
-const state = { isMenuOpen: false, activeSection: 'landingKostiantyn', isLoaded: false, particles: [] };
+const state = { isMenuOpen: false, activeSection: 'landingKostiantyn', isLoaded: false, particles: [], projects: [] };
 
 const elements = {
     loader: null,
@@ -11,11 +11,13 @@ const elements = {
     backToTop: null,
     filterButtons: null,
     projectCards: null,
-    expandButtons: null
+    expandButtons: null,
+    projectGrid: null
 };
 
 function init() {
     cacheDOM();
+    loadProjects();
     wireEvents();
     watchSections();
     prepParticles();
@@ -33,8 +35,7 @@ function cacheDOM() {
     elements.particlesContainer = document.getElementById('landingAmbient');
     elements.backToTop = document.getElementById('backToTop');
     elements.filterButtons = document.querySelectorAll('.filterButton');
-    elements.projectCards = document.querySelectorAll('.projectPanel');
-    elements.expandButtons = document.querySelectorAll('.expandButton');
+    elements.projectGrid = document.getElementById('projectGrid');
 }
 
 function wireEvents() {
@@ -42,12 +43,65 @@ function wireEvents() {
     elements.menuToggle?.addEventListener('click', toggleMobileMenu);
     elements.backToTop?.addEventListener('click', scrollToTop);
     elements.filterButtons.forEach(btn => btn.addEventListener('click', handleFilterClick));
-    elements.expandButtons.forEach(btn => btn.addEventListener('click', toggleProjectDetails));
     window.addEventListener('scroll', throttle(handleScroll, 20));
     window.addEventListener('resize', throttle(handleResize, 120));
     document.addEventListener('click', handleOutsideClick);
     document.addEventListener('keydown', handleKeyDown);
-    // TODO: add keyboard shortcuts for section jumps
+}
+
+async function loadProjects() {
+    try {
+        const response = await fetch('projects.json');
+        if (!response.ok) throw new Error('Failed to load projects');
+        const data = await response.json();
+        state.projects = data.projects;
+        renderProjects(state.projects);
+        
+        // Re-cache project elements after rendering
+        elements.projectCards = document.querySelectorAll('.projectPanel');
+        elements.expandButtons = document.querySelectorAll('.expandButton');
+        elements.expandButtons.forEach(btn => btn.addEventListener('click', toggleProjectDetails));
+    } catch (error) {
+        console.error('Error loading projects:', error);
+        elements.projectGrid.innerHTML = '<p style="color: var(--color-text-muted); text-align: center; padding: 40px;">Unable to load projects. Please try again later.</p>';
+    }
+}
+
+function renderProjects(projects) {
+    if (!elements.projectGrid) return;
+    
+    elements.projectGrid.innerHTML = projects.map(project => {
+        const metaItems = [];
+        if (project.meta.timeline) metaItems.push(`<span class="projectTimeline">${project.meta.timeline}</span>`);
+        if (project.meta.role) metaItems.push(`<span class="projectRole">${project.meta.role}</span>`);
+        if (project.meta.platform) metaItems.push(`<span class="projectPlatform">${project.meta.platform}</span>`);
+        
+        const statusBadge = project.status ? `<div class="projectStatus">${project.status}</div>` : '';
+        
+        return `
+            <article class="projectPanel" data-category="${project.categories.join(' ')}">
+                <div class="projectHeader">
+                    <h3>${project.title}</h3>
+                    ${statusBadge}
+                    <div class="projectStack">
+                        ${project.stack.map(tech => `<span class="stackTag">${tech}</span>`).join('')}
+                    </div>
+                </div>
+                ${metaItems.length > 0 ? `<div class="projectMeta">${metaItems.join('')}</div>` : ''}
+                <p class="projectExcerpt">${project.excerpt}</p>
+                <div class="projectDetails" style="display:none;">
+                    <h4>${project.details.heading}</h4>
+                    <ul>
+                        ${project.details.items.map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                    <div class="projectOutcome">
+                        <strong>${project.status === 'In development' ? 'Goal:' : 'Result:'}</strong> ${project.details.outcome}
+                    </div>
+                </div>
+                <button class="expandButton">Learn more</button>
+            </article>
+        `;
+    }).join('');
 }
 
 function handleNavClick(event) {
