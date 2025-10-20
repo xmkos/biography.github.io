@@ -1,3 +1,7 @@
 User-agent: *
 Allow: /
+Allow: /app.js
+Allow: /style.css
+Allow: /assets/js/main.js
+Allow: /assets/css/styles.css
 Sitemap: https://xmkos.github.io/biography.github.io/sitemap.xml
