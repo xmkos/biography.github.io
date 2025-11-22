@@ -63,6 +63,7 @@ function attachEventListeners() {
 async function loadProjects() {
     console.log('Loading projects from projects.json...');
     console.log('Project grid element:', dom.projectGrid);
+    console.log('Current location:', window.location.href);
     
     if (!dom.projectGrid) {
         console.error('Project grid element not found!');
@@ -70,23 +71,39 @@ async function loadProjects() {
     }
     
     try {
-        const response = await fetch('projects.json');
+        // Check if we're on file:// protocol
+        if (window.location.protocol === 'file:') {
+            console.warn('Running on file:// protocol - fetch may not work. Please use a local server.');
+        }
+        
+        const response = await fetch('./projects.json');
         console.log('Fetch response:', response.status, response.ok);
         
-        if (!response.ok) throw new Error(`Failed to load projects: ${response.status}`);
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
         
         const data = await response.json();
+        console.log('Projects data:', data);
         console.log('Projects loaded:', data.projects?.length || 0);
+        
+        if (!data.projects || !Array.isArray(data.projects)) {
+            throw new Error('Invalid projects data structure');
+        }
         
         state.projects = data.projects;
         renderProjects(state.projects);
     } catch (error) {
         console.error('Error loading projects:', error);
         if (dom.projectGrid) {
+            const errorMsg = window.location.protocol === 'file:' 
+                ? 'Please open this site using a local server (e.g., python -m http.server or Live Server extension)'
+                : error.message;
+            
             dom.projectGrid.innerHTML = `
                 <div class="loading" style="color: #e53e3e;">
                     <p>⚠️ Unable to load projects</p>
-                    <p style="font-size: 0.9rem; margin-top: 0.5rem;">${error.message}</p>
+                    <p style="font-size: 0.9rem; margin-top: 0.5rem;">${errorMsg}</p>
                 </div>
             `;
         }
@@ -260,3 +277,5 @@ if (document.readyState === 'loading') {
 
 // Log version info for debugging
 console.log('Portfolio site initialized - v2.0');
+console.log('Protocol:', window.location.protocol);
+console.log('If projects don\'t load, serve the site with: python -m http.server or use Live Server extension');

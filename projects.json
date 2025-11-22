@@ -101,27 +101,27 @@
       }
     },
     {
-    "id": "commercehub-inventory-ai",
-    "title": "CommerceHub - AI Inventory Management",
-    "categories": ["ml", "python", "time-series", "e-commerce", "shopify"],
-    "stack": ["Python", "FastAPI", "React", "Vite","Tailwind CSS", "JavaScript", "statsmodels", "scikit-learn"],
-    "meta": {
-      "timeline": "Hackathon project (SynderHacks Wrocław)"
-    },
-    "excerpt": "AI-powered inventory assistant for e-commerce that uses ARIMA forecasting to predict stockouts, optimize reorder timing, and generate intelligent recommendations for inventory management.",
-    "details": {
-      "heading": "Highlights",
-      "items": [
-        "ARIMA-based demand forecasting with exponential smoothing fallback for robust predictions across varying data quality.",
-        "Intelligent recommendation engine with 7 types of insights (critical stockouts, trending products, slow movers, seasonal patterns, overstock alerts, price optimization, stock balancing).",
-        "Adaptive learning system that remembers dismissed recommendations and generates alternative strategies to match business preferences.",
-        "Seamless Shopify integration with one-click sync, real-time updates, and direct admin portal links.(unable to use webhooks on localhost)",
-        "Feature engineering pipeline with anomaly detection, velocity tracking, and seasonal signal analysis for accurate forecasts.",
-        "Full-stack implementation with FastAPI backend, React+Vite frontend, and SQLAlchemy ORM for data persistence."
-      ],
-      "outcome": "Worked on backend API development, ETL pipeline for data processing, ARIMA model"
+      "id": "commercehub-inventory-ai",
+      "title": "CommerceHub - AI Inventory Management",
+      "categories": ["ml", "python", "time-series", "e-commerce", "backend"],
+      "stack": ["Python", "FastAPI", "SQLAlchemy", "statsmodels", "scikit-learn", "PostgreSQL"],
+      "meta": {
+        "timeline": "Hackathon project (SynderHacks Wrocław)"
+      },
+      "excerpt": "AI-powered inventory backend for e-commerce using ARIMA forecasting to predict stockouts, optimize reorder timing, and generate intelligent inventory recommendations.",
+      "details": {
+        "heading": "Highlights",
+        "items": [
+          "Backend API development with FastAPI and RESTful endpoints.",
+          "ARIMA-based demand forecasting with exponential smoothing fallback.",
+          "ETL pipeline for data processing and feature engineering.",
+          "Intelligent recommendation engine with 7 types of insights (stockouts, trending products, slow movers, seasonal patterns, overstock alerts, price optimization, stock balancing).",
+          "Shopify integration API for product and inventory sync.",
+          "SQLAlchemy ORM for data persistence and PostgreSQL database design."
+        ],
+        "outcome": "Built complete backend infrastructure for AI-driven inventory management system"
+      }
     }
-}
 
   ]
 }
