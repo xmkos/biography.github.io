@@ -1,353 +1,227 @@
-const state = { isMenuOpen: false, activeSection: 'landingKostiantyn', isLoaded: false, particles: [], projects: [] };
+// Clean, modern JavaScript for portfolio site
+// Handles navigation, project loading, and smooth interactions
 
-const elements = {
-    loader: null,
-    navbar: null,
-    navLinks: null,
-    menuToggle: null,
+const state = {
+    isMenuOpen: false,
+    projects: []
+};
+
+const dom = {
+    nav: null,
+    navToggle: null,
     navMenu: null,
-    typewriter: null,
-    particlesContainer: null,
-    backToTop: null,
-    filterButtons: null,
-    projectCards: null,
-    expandButtons: null,
+    navLinks: null,
     projectGrid: null
 };
 
+// Initialize app
 function init() {
-    cacheDOM();
+    cacheDOMElements();
+    attachEventListeners();
     loadProjects();
-    wireEvents();
-    watchSections();
-    prepParticles();
-    runTypewriter();
-    fadeLoader();
 }
 
-function cacheDOM() {
-    elements.loader = document.getElementById('portfolioLoader');
-    elements.navbar = document.getElementById('siteNav');
-    elements.navLinks = document.querySelectorAll('.menuAnchor');
-    elements.menuToggle = document.getElementById('menuToggle');
-    elements.navMenu = document.getElementById('menuLinks');
-    elements.typewriter = document.getElementById('introTypewriter');
-    elements.particlesContainer = document.getElementById('landingAmbient');
-    elements.backToTop = document.getElementById('backToTop');
-    elements.filterButtons = document.querySelectorAll('.filterButton');
-    elements.projectGrid = document.getElementById('projectGrid');
+function cacheDOMElements() {
+    dom.nav = document.getElementById('nav');
+    dom.navToggle = document.getElementById('navToggle');
+    dom.navMenu = document.getElementById('navMenu');
+    dom.navLinks = document.querySelectorAll('.nav-link');
+    dom.projectGrid = document.getElementById('projectGrid');
 }
 
-function wireEvents() {
-    elements.navLinks.forEach(anchor => anchor.addEventListener('click', handleNavClick));
-    elements.menuToggle?.addEventListener('click', toggleMobileMenu);
-    elements.backToTop?.addEventListener('click', scrollToTop);
-    elements.filterButtons.forEach(btn => btn.addEventListener('click', handleFilterClick));
-    window.addEventListener('scroll', throttle(handleScroll, 20));
-    window.addEventListener('resize', throttle(handleResize, 120));
+function attachEventListeners() {
+    // Navigation toggle
+    dom.navToggle?.addEventListener('click', toggleMobileMenu);
+    
+    // Smooth scroll for nav links
+    dom.navLinks.forEach(link => {
+        link.addEventListener('click', handleNavClick);
+    });
+    
+    // Close menu when clicking outside
     document.addEventListener('click', handleOutsideClick);
-    document.addEventListener('keydown', handleKeyDown);
+    
+    // Close menu on escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && state.isMenuOpen) {
+            toggleMobileMenu();
+        }
+    });
+    
+    // Scroll handler
+    window.addEventListener('scroll', throttle(handleScroll, 100));
 }
 
+// Load and render projects
 async function loadProjects() {
     try {
-        console.log('Loading projects...');
-        console.log('Project grid element:', elements.projectGrid);
-        
         const response = await fetch('projects.json');
-        console.log('Fetch response:', response.ok);
-        
         if (!response.ok) throw new Error('Failed to load projects');
         
         const data = await response.json();
-        console.log('Loaded projects:', data);
-        
         state.projects = data.projects;
         renderProjects(state.projects);
-        
-        // Re-cache project elements after rendering
-        elements.projectCards = document.querySelectorAll('.projectPanel');
-        elements.expandButtons = document.querySelectorAll('.expandButton');
-        elements.expandButtons.forEach(btn => btn.addEventListener('click', toggleProjectDetails));
-        
-        console.log('Projects rendered successfully');
     } catch (error) {
         console.error('Error loading projects:', error);
-        if (elements.projectGrid) {
-            elements.projectGrid.innerHTML = '<p style="color: var(--color-text-muted); text-align: center; padding: 40px;">Unable to load projects. Please try again later.</p>';
+        if (dom.projectGrid) {
+            dom.projectGrid.innerHTML = `
+                <div style="text-align: center; padding: 2rem; color: var(--text-muted);">
+                    <p>Unable to load projects. Please try again later.</p>
+                </div>
+            `;
         }
     }
 }
 
 function renderProjects(projects) {
-    console.log('renderProjects called with:', projects);
+    if (!dom.projectGrid) return;
     
-    if (!elements.projectGrid) {
-        console.error('projectGrid element not found!');
-        return;
-    }
+    const html = projects.map(project => createProjectCard(project)).join('');
+    dom.projectGrid.innerHTML = html;
     
-    const html = projects.map(project => {
-        const metaItems = [];
-        if (project.meta && project.meta.timeline) metaItems.push(`<span class="projectTimeline">${project.meta.timeline}</span>`);
-        if (project.meta && project.meta.role) metaItems.push(`<span class="projectRole">${project.meta.role}</span>`);
-        if (project.meta && project.meta.platform) metaItems.push(`<span class="projectPlatform">${project.meta.platform}</span>`);
-        
-        const statusBadge = project.status ? `<div class="projectStatus">${project.status}</div>` : '';
-        
-        return `
-            <article class="projectPanel" data-category="${project.categories.join(' ')}">
-                <div class="projectHeader">
-                    <h3>${project.title}</h3>
-                    ${statusBadge}
-                    <div class="projectStack">
-                        ${project.stack.map(tech => `<span class="stackTag">${tech}</span>`).join('')}
-                    </div>
-                </div>
-                ${metaItems.length > 0 ? `<div class="projectMeta">${metaItems.join('')}</div>` : ''}
-                <p class="projectExcerpt">${project.excerpt}</p>
-                <div class="projectDetails" style="display:none;">
-                    <h4>${project.details.heading}</h4>
-                    <ul>
-                        ${project.details.items.map(item => `<li>${item}</li>`).join('')}
-                    </ul>
-                    <div class="projectOutcome">
-                        <strong>${project.status === 'In development' ? 'Goal:' : 'Result:'}</strong> ${project.details.outcome}
-                    </div>
-                </div>
-                <button class="expandButton">Learn more</button>
-            </article>
-        `;
-    }).join('');
-    
-    console.log('Generated HTML length:', html.length);
-    elements.projectGrid.innerHTML = html;
-    console.log('Projects inserted into DOM');
-}
-
-function handleNavClick(event) {
-    event.preventDefault();
-    const targetId = event.currentTarget.getAttribute('href').slice(1);
-    const target = document.getElementById(targetId);
-    if (target) {
-        const offset = target.offsetTop - 80;
-        window.scrollTo({ top: offset, behavior: 'smooth' });
-    }
-    if (state.isMenuOpen) toggleMobileMenu();
-    highlightNav(targetId);
-}
-
-function highlightNav(id) {
-    elements.navLinks.forEach(link => {
-        link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+    // Attach event listeners to toggle buttons
+    document.querySelectorAll('.project-toggle').forEach(button => {
+        button.addEventListener('click', handleProjectToggle);
     });
-    state.activeSection = id;
+}
+
+function createProjectCard(project) {
+    const meta = project.meta || {};
+    const metaHTML = Object.entries(meta).map(([key, value]) => 
+        `<span>${value}</span>`
+    ).join('');
+    
+    return `
+        <div class="project-card">
+            <div class="project-header">
+                <h3 class="project-title">${project.title}</h3>
+            </div>
+            
+            ${metaHTML ? `<div class="project-meta">${metaHTML}</div>` : ''}
+            
+            <div class="project-tags">
+                ${project.stack.map(tech => `<span class="project-tag">${tech}</span>`).join('')}
+            </div>
+            
+            <p class="project-description">${project.excerpt}</p>
+            
+            <div class="project-details" style="display: none;">
+                <h4>${project.details.heading}</h4>
+                <ul>
+                    ${project.details.items.map(item => `<li>${item}</li>`).join('')}
+                </ul>
+                <div class="project-outcome">
+                    <strong>Outcome:</strong> ${project.details.outcome}
+                </div>
+            </div>
+            
+            <button class="project-toggle">Show more</button>
+        </div>
+    `;
+}
+
+function handleProjectToggle(e) {
+    const button = e.currentTarget;
+    const card = button.closest('.project-card');
+    const details = card.querySelector('.project-details');
+    
+    if (!details) return;
+    
+    const isExpanded = details.style.display !== 'none';
+    
+    if (isExpanded) {
+        details.style.display = 'none';
+        button.textContent = 'Show more';
+    } else {
+        details.style.display = 'block';
+        button.textContent = 'Show less';
+    }
+}
+
+// Navigation handlers
+function handleNavClick(e) {
+    const href = e.currentTarget.getAttribute('href');
+    
+    // Only handle anchor links
+    if (!href || !href.startsWith('#')) return;
+    
+    e.preventDefault();
+    
+    const targetId = href.substring(1);
+    const target = document.getElementById(targetId);
+    
+    if (target) {
+        const offset = 80; // Account for fixed nav
+        const targetPosition = target.offsetTop - offset;
+        
+        window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+        });
+    }
+    
+    // Close mobile menu if open
+    if (state.isMenuOpen) {
+        toggleMobileMenu();
+    }
 }
 
 function toggleMobileMenu() {
     state.isMenuOpen = !state.isMenuOpen;
-    elements.navMenu.classList.toggle('active', state.isMenuOpen);
-    elements.menuToggle.classList.toggle('active', state.isMenuOpen);
+    dom.navMenu?.classList.toggle('active', state.isMenuOpen);
+    dom.navToggle?.classList.toggle('active', state.isMenuOpen);
+    
+    // Prevent body scroll when menu is open
     document.body.style.overflow = state.isMenuOpen ? 'hidden' : '';
 }
 
-function handleScroll() {
-    const y = window.scrollY;
-    if (y > 50) {
-        elements.navbar?.classList.add('scrolled');
-    } else {
-        elements.navbar?.classList.remove('scrolled');
-    }
-    if (y > 500) {
-        elements.backToTop?.classList.add('show');
-    } else {
-        elements.backToTop?.classList.remove('show');
-    }
-    syncActiveSection();
-}
-
-function syncActiveSection() {
-    const ids = ['landingKostiantyn', 'profileStory', 'craftCatalogue', 'buildLog', 'learningTimeline', 'contactBridge'];
-    const marker = window.scrollY + 110;
-    for (let index = ids.length - 1; index >= 0; index--) {
-        const section = document.getElementById(ids[index]);
-        if (section && section.offsetTop <= marker) {
-            if (state.activeSection !== ids[index]) highlightNav(ids[index]);
-            break;
-        }
-    }
-}
-
-function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function handleResize() {
-    if (window.innerWidth > 768 && state.isMenuOpen) toggleMobileMenu();
-    if (elements.particlesContainer) prepParticles();
-}
-
-function handleOutsideClick(event) {
+function handleOutsideClick(e) {
     if (!state.isMenuOpen) return;
-    if (elements.navMenu.contains(event.target)) return;
-    if (elements.menuToggle.contains(event.target)) return;
-    toggleMobileMenu();
+    
+    // Check if click is outside nav menu and toggle button
+    if (!dom.navMenu?.contains(e.target) && !dom.navToggle?.contains(e.target)) {
+        toggleMobileMenu();
+    }
 }
 
-function handleKeyDown(event) {
-    if (event.key === 'Escape' && state.isMenuOpen) toggleMobileMenu();
-    // TODO: surface a focus trap for the mobile menu
-}
-
-function handleFilterClick(event) {
-    const filter = event.currentTarget.getAttribute('data-filter');
-    elements.filterButtons.forEach(btn => btn.classList.toggle('active', btn === event.currentTarget));
-    filterProjects(filter);
-}
-
-function filterProjects(filter) {
-    elements.projectCards.forEach(card => {
-        const categories = card.getAttribute('data-category').split(' ');
-        const visible = filter === 'all' || categories.includes(filter);
-        if (visible) {
-            card.style.display = 'block';
-            card.classList.remove('hidden');
-            setTimeout(() => {
-                card.style.opacity = '1';
-                card.style.transform = 'translateY(0)';
-            }, 80);
-        } else {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(24px)';
-            setTimeout(() => {
-                card.style.display = 'none';
-                card.classList.add('hidden');
-            }, 260);
-        }
-    });
-}
-
-function toggleProjectDetails(event) {
-    const button = event.currentTarget;
-    const panel = button.closest('.projectPanel');
-    const details = panel.querySelector('.projectDetails');
-    const willOpen = details.style.display === 'none' || !details.style.display;
-    if (willOpen) {
-        details.style.display = 'block';
-        button.textContent = 'Show less';
-        setTimeout(() => {
-            details.style.opacity = '1';
-            details.style.transform = 'translateY(0)';
-        }, 12);
+function handleScroll() {
+    // Add shadow to nav on scroll
+    if (window.scrollY > 10) {
+        dom.nav?.classList.add('scrolled');
     } else {
-        details.style.opacity = '0';
-        details.style.transform = 'translateY(-12px)';
-        setTimeout(() => {
-            details.style.display = 'none';
-            button.textContent = 'Learn more';
-        }, 220);
+        dom.nav?.classList.remove('scrolled');
     }
 }
 
-function prepParticles() {
-    if (!elements.particlesContainer) return;
-    elements.particlesContainer.innerHTML = '';
-    state.particles = [];
-    const count = Math.min(40, Math.floor(window.innerWidth / 40));
-    for (let i = 0; i < count; i++) createParticle();
-    animateParticles();
-}
-
-function createParticle() {
-    const node = document.createElement('div');
-    node.className = 'ambientParticle';
-    const size = Math.random() * 3 + 2;
-    const x = Math.random() * window.innerWidth;
-    const y = Math.random() * window.innerHeight;
-    const speedX = (Math.random() - 0.5) * 0.4;
-    const speedY = (Math.random() - 0.5) * 0.4;
-    node.style.width = `${size}px`;
-    node.style.height = `${size}px`;
-    node.style.left = `${x}px`;
-    node.style.top = `${y}px`;
-    node.style.animationDelay = `${Math.random() * 5}s`;
-    elements.particlesContainer.appendChild(node);
-    state.particles.push({ element: node, x, y, speedX, speedY, size });
-}
-
-function animateParticles() {
-    if (!state.isLoaded || !elements.particlesContainer) {
-        requestAnimationFrame(animateParticles);
-        return;
-    }
-    state.particles.forEach(particle => {
-        particle.x += particle.speedX;
-        particle.y += particle.speedY;
-        if (particle.x > window.innerWidth) particle.x = -particle.size;
-        if (particle.x < -particle.size) particle.x = window.innerWidth;
-        if (particle.y > window.innerHeight) particle.y = -particle.size;
-        if (particle.y < -particle.size) particle.y = window.innerHeight;
-        particle.element.style.left = `${particle.x}px`;
-        particle.element.style.top = `${particle.y}px`;
-    });
-    requestAnimationFrame(animateParticles);
-}
-
-function runTypewriter() {
-    if (!elements.typewriter) return;
-    const text = "Hi! I'm Kostiantyn";
-    let index = 0;
-    elements.typewriter.textContent = '';
-    function typeNext() {
-        if (index < text.length) {
-            elements.typewriter.textContent += text.charAt(index);
-            index += 1;
-            setTimeout(typeNext, 95);
-        }
-    }
-    setTimeout(typeNext, 900);
-}
-
-function watchSections() {
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (!entry.isIntersecting) return;
-            entry.target.classList.add('animated');
-            observer.unobserve(entry.target);
-        });
-    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
-
-    const selectors = '.sectionHeading, .profileLayout, .skillBlock, .projectPanel, .learningPanel, .contactRow, .socialEntry';
-    document.querySelectorAll(selectors).forEach((node, idx) => {
-        node.classList.add('animateTarget');
-        if (idx % 3 === 0) node.classList.add('animateRise');
-        else if (idx % 3 === 1) node.classList.add('animateSlideLeft');
-        else node.classList.add('animateSlideRight');
-        observer.observe(node);
-    });
-}
-
-function fadeLoader() {
-    if (!elements.loader) {
-        state.isLoaded = true;
-        return;
-    }
-    setTimeout(() => {
-        elements.loader.classList.add('loaderFade');
-        state.isLoaded = true;
-        setTimeout(() => {
-            elements.loader.style.display = 'none';
-        }, 460);
-    }, 1200);
-}
-
+// Utility: Throttle function
 function throttle(func, wait) {
-    let timeout;
-    return function throttled(...args) {
-        if (timeout) clearTimeout(timeout);
-        timeout = setTimeout(() => func.apply(this, args), wait);
+    let timeout = null;
+    let previous = 0;
+    
+    return function(...args) {
+        const now = Date.now();
+        const remaining = wait - (now - previous);
+        
+        if (remaining <= 0 || remaining > wait) {
+            if (timeout) {
+                clearTimeout(timeout);
+                timeout = null;
+            }
+            previous = now;
+            func.apply(this, args);
+        } else if (!timeout) {
+            timeout = setTimeout(() => {
+                previous = Date.now();
+                timeout = null;
+                func.apply(this, args);
+            }, remaining);
+        }
     };
 }
 
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-else init();
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+} else {
+    init();
+}
