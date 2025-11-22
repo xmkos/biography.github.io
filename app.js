@@ -27,6 +27,13 @@ function cacheDOMElements() {
     dom.navMenu = document.getElementById('navMenu');
     dom.navLinks = document.querySelectorAll('.nav-link');
     dom.projectGrid = document.getElementById('projectGrid');
+    
+    console.log('DOM Elements cached:', {
+        nav: !!dom.nav,
+        navToggle: !!dom.navToggle,
+        navMenu: !!dom.navMenu,
+        projectGrid: !!dom.projectGrid
+    });
 }
 
 function attachEventListeners() {
@@ -54,19 +61,32 @@ function attachEventListeners() {
 
 // Load and render projects
 async function loadProjects() {
+    console.log('Loading projects from projects.json...');
+    console.log('Project grid element:', dom.projectGrid);
+    
+    if (!dom.projectGrid) {
+        console.error('Project grid element not found!');
+        return;
+    }
+    
     try {
         const response = await fetch('projects.json');
-        if (!response.ok) throw new Error('Failed to load projects');
+        console.log('Fetch response:', response.status, response.ok);
+        
+        if (!response.ok) throw new Error(`Failed to load projects: ${response.status}`);
         
         const data = await response.json();
+        console.log('Projects loaded:', data.projects?.length || 0);
+        
         state.projects = data.projects;
         renderProjects(state.projects);
     } catch (error) {
         console.error('Error loading projects:', error);
         if (dom.projectGrid) {
             dom.projectGrid.innerHTML = `
-                <div style="text-align: center; padding: 2rem; color: var(--text-muted);">
-                    <p>Unable to load projects. Please try again later.</p>
+                <div class="loading" style="color: #e53e3e;">
+                    <p>⚠️ Unable to load projects</p>
+                    <p style="font-size: 0.9rem; margin-top: 0.5rem;">${error.message}</p>
                 </div>
             `;
         }
@@ -74,8 +94,17 @@ async function loadProjects() {
 }
 
 function renderProjects(projects) {
-    if (!dom.projectGrid) return;
+    if (!dom.projectGrid) {
+        console.error('Cannot render projects: projectGrid element not found');
+        return;
+    }
     
+    if (!projects || projects.length === 0) {
+        dom.projectGrid.innerHTML = '<div class="loading">No projects available.</div>';
+        return;
+    }
+    
+    console.log(`Rendering ${projects.length} projects...`);
     const html = projects.map(project => createProjectCard(project)).join('');
     dom.projectGrid.innerHTML = html;
     
@@ -91,9 +120,12 @@ function createProjectCard(project) {
         `<span>${value}</span>`
     ).join('');
     
+    const statusBadge = project.status ? `<span class="project-status">${project.status}</span>` : '';
+    
     return `
         <div class="project-card">
             <div class="project-header">
+                ${statusBadge}
                 <h3 class="project-title">${project.title}</h3>
             </div>
             
@@ -225,3 +257,6 @@ if (document.readyState === 'loading') {
 } else {
     init();
 }
+
+// Log version info for debugging
+console.log('Portfolio site initialized - v2.0');
