@@ -42,62 +42,67 @@
     },
     {
       "id": "gamejam",
-      "title": "Unity game jam prototype",
-      "categories": ["game-dev", "unity"],
-      "stack": ["Unity", "C#", "ShaderLab", "HLSL"],
+      "title": "Unity Turn-Based Card Battler (Game Jam)",
+      "categories": ["game-dev", "unity", "card-game"],
+      "stack": ["Unity", "C#"],
       "meta": {
-        "timeline": "Game jam weekend"
+        "timeline": "Game jam event"
       },
-      "excerpt": "Fast-paced Unity prototype built under jam constraints, emphasizing readable combat and moment-to-moment control.",
+      "excerpt": "Turn-based card battler developed for a Game Jam, featuring strategic card mechanics, enemy combat system, and complete game loop with win/lose conditions.",
       "details": {
-        "heading": "Highlights",
+        "heading": "Key Features Implemented",
         "items": [
-          "AI state machines with reusable decision helpers.",
-          "Movement blends and pathfinding tuned for mobile performance.",
-          "Boss encounters integrating telegraphed attacks and phase changes.",
-          "Combat systems integrated with progression and loot."
+          "Card system with Attack, Defence, and Buff/Debuff mechanics with drag-and-drop card zones.",
+          "Combat system featuring enemy AI, damage calculation, and stamina management.",
+          "Complete game loop with round progression, win/lose conditions, and game-over menus.",
+          "Multiple balance patches and backend gameplay refinements.",
+          "UI/UX improvements including HUD updates and polished animations.",
+          "Extensive bug fixes and prefab optimization to prevent overlapping issues."
         ],
-        "outcome": "Playable vertical slice with tight controls and clearly telegraphed encounters."
+        "outcome": "Fully playable turn-based card battler with polished combat mechanics and balanced gameplay."
       }
     },
     {
       "id": "gamejam2",
-      "title": "Unity game jam sequel/prototype",
-      "categories": ["game-dev", "unity"],
+      "title": "Unity Game Development - Backend & Graphics",
+      "categories": ["game-dev", "unity", "shaders"],
       "stack": ["Unity", "C#", "ShaderLab", "HLSL"],
       "meta": {
-        "timeline": "Game jam weekend"
+        "timeline": "Game jam project"
       },
-      "excerpt": "Iteration on jam mechanics with expanded encounters and stylized visuals.",
+      "excerpt": "Comprehensive Unity game project focusing on backend game logic, shader development, and modular architecture for efficient game structure.",
       "details": {
-        "heading": "Highlights",
+        "heading": "Technical Implementation",
         "items": [
-          "AI state machines with reusable decision helpers.",
-          "Movement blends and pathfinding tuned for mobile performance.",
-          "Boss encounters integrating telegraphed attacks and phase changes.",
-          "Stylized shaders and VFX authored in ShaderLab/HLSL."
+          "Backend development with C# for game mechanics, object behaviors, physics, and event handling systems.",
+          "Script architecture managing logic, interaction triggers, and gameplay functionality.",
+          "Graphics and visual effects using ShaderLab and HLSL for custom rendering, lighting optimization, and graphical fidelity.",
+          "Well-structured prefab system with modular game objects ensuring reusability and efficient hierarchy.",
+          "Integrated game structure combining backend logic, scripting, and shader development for cohesive project."
         ],
-        "outcome": "Refined prototype improving readability, difficulty curve, and visual clarity."
+        "outcome": "Complete game backend with optimized shaders and organized modular architecture for scalable development."
       }
     },
     {
       "id": "game-knight-testing",
-      "title": "Game Knight combat testbed",
-      "categories": ["game-dev", "unity"],
-      "stack": ["Unity", "C#", "ShaderLab", "HLSL"],
+      "title": "Game Knight - Shader & Gameplay Development",
+      "categories": ["game-dev", "unity", "shaders", "ai"],
+      "stack": ["ShaderLab", "C#", "HLSL", "Unity"],
       "meta": {
-        "timeline": "Prototype cycle"
+        "timeline": "Iterative development cycle"
       },
-      "excerpt": "Unity sandbox focused on tuning combat feel, animation flow, and encounter pacing.",
+      "excerpt": "Unity project emphasizing custom shader development , gameplay scripting , and graphics pipeline optimization, with focus on enemy AI and pathfinding logic.",
       "details": {
-        "heading": "Highlights",
+        "heading": "Technical Breakdown",
         "items": [
-          "AI state machines with reusable decision helpers.",
-          "Movement blends and pathfinding tuned for mobile performance.",
-          "Boss encounters integrating telegraphed attacks and phase changes.",
-          "Combat systems integrated with progression and loot."
+          "ShaderLab development  for custom graphics, lighting effects, and visual aesthetics enhancement.",
+          "C# scripting  for game mechanics, object interactions, physics systems, and AI behavior logic.",
+          "HLSL programming for low-level graphics pipeline development and visual optimizations.",
+          "Enemy behavior logic and AI systems for combat encounters and decision-making.",
+          "Pathfinding algorithms and navigation logic for enemy movement and spatial awareness.",
+          "Organized backend scripts, prefabs, and modular structure supporting iterative testing and development."
         ],
-        "outcome": "Reliable combat loop with responsive inputs and readable enemy behavior."
+        "outcome": "Graphics-focused Unity project with sophisticated shader systems and intelligent enemy AI behavior."
       }
     },
     {
